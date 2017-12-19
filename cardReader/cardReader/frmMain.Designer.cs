@@ -44,22 +44,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbbTagShow = new System.Windows.Forms.ComboBox();
             this.COUNT = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -68,26 +68,27 @@
             this.panel1.Controls.Add(this.btnOpen);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Location = new System.Drawing.Point(0, -2);
+            this.panel1.Location = new System.Drawing.Point(-2, -2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(230, 572);
+            this.panel1.Size = new System.Drawing.Size(238, 572);
             this.panel1.TabIndex = 0;
             // 
             // btnOpen
             // 
             this.btnOpen.Font = new System.Drawing.Font("SimSun", 10F);
-            this.btnOpen.Location = new System.Drawing.Point(92, 243);
+            this.btnOpen.Location = new System.Drawing.Point(92, 328);
             this.btnOpen.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(119, 40);
             this.btnOpen.TabIndex = 11;
             this.btnOpen.Text = "打开串口";
             this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::cardReader.Properties.Resources.red;
-            this.pictureBox1.Location = new System.Drawing.Point(25, 248);
+            this.pictureBox1.Location = new System.Drawing.Point(24, 328);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
@@ -112,7 +113,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(237, 212);
+            this.groupBox1.Size = new System.Drawing.Size(237, 279);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "端口设置";
@@ -126,7 +127,7 @@
             "校验",
             "空格校验",
             "标记校验"});
-            this.cbbParity.Location = new System.Drawing.Point(24, 158);
+            this.cbbParity.Location = new System.Drawing.Point(24, 227);
             this.cbbParity.Margin = new System.Windows.Forms.Padding(4);
             this.cbbParity.Name = "cbbParity";
             this.cbbParity.Size = new System.Drawing.Size(129, 25);
@@ -140,7 +141,7 @@
             "1",
             "2",
             "3"});
-            this.cbbStopBits.Location = new System.Drawing.Point(24, 125);
+            this.cbbStopBits.Location = new System.Drawing.Point(24, 173);
             this.cbbStopBits.Margin = new System.Windows.Forms.Padding(4);
             this.cbbStopBits.Name = "cbbStopBits";
             this.cbbStopBits.Size = new System.Drawing.Size(129, 25);
@@ -154,7 +155,7 @@
             "6",
             "7",
             "8"});
-            this.cbbDataBits.Location = new System.Drawing.Point(24, 91);
+            this.cbbDataBits.Location = new System.Drawing.Point(24, 121);
             this.cbbDataBits.Margin = new System.Windows.Forms.Padding(4);
             this.cbbDataBits.Name = "cbbDataBits";
             this.cbbDataBits.Size = new System.Drawing.Size(129, 25);
@@ -177,7 +178,7 @@
             "56000",
             "57600",
             "115200"});
-            this.cbbBaudRate.Location = new System.Drawing.Point(24, 55);
+            this.cbbBaudRate.Location = new System.Drawing.Point(24, 74);
             this.cbbBaudRate.Margin = new System.Windows.Forms.Padding(4);
             this.cbbBaudRate.Name = "cbbBaudRate";
             this.cbbBaudRate.Size = new System.Drawing.Size(129, 25);
@@ -209,7 +210,7 @@
             "COM18",
             "COM19",
             "COM20"});
-            this.cbbComList.Location = new System.Drawing.Point(24, 22);
+            this.cbbComList.Location = new System.Drawing.Point(24, 29);
             this.cbbComList.Margin = new System.Windows.Forms.Padding(4);
             this.cbbComList.Name = "cbbComList";
             this.cbbComList.Size = new System.Drawing.Size(129, 25);
@@ -218,7 +219,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(163, 62);
+            this.label2.Location = new System.Drawing.Point(163, 81);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 17);
@@ -228,7 +229,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(163, 161);
+            this.label5.Location = new System.Drawing.Point(163, 230);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 17);
@@ -238,7 +239,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(163, 26);
+            this.label1.Location = new System.Drawing.Point(163, 34);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 17);
@@ -248,7 +249,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(163, 129);
+            this.label4.Location = new System.Drawing.Point(163, 177);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 17);
@@ -258,7 +259,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(163, 95);
+            this.label3.Location = new System.Drawing.Point(163, 125);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 17);
@@ -274,14 +275,24 @@
             this.panel2.Size = new System.Drawing.Size(747, 570);
             this.panel2.TabIndex = 1;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 69);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 27;
+            this.dataGridView1.Size = new System.Drawing.Size(747, 501);
+            this.dataGridView1.TabIndex = 1;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.cbbTagShow);
             this.groupBox2.Controls.Add(this.COUNT);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Font = new System.Drawing.Font("SimSun", 10F);
             this.groupBox2.Location = new System.Drawing.Point(0, 7);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(744, 61);
@@ -289,17 +300,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "标签设置";
             // 
-            // comboBox1
+            // label8
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "显示所有设备标签",
-            "显示选中设备标签"});
-            this.comboBox1.Location = new System.Drawing.Point(139, 21);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 23);
-            this.comboBox1.TabIndex = 5;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(53, 26);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 17);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "标签显示";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(572, 26);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(76, 17);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "标签数量";
+            // 
+            // cbbTagShow
+            // 
+            this.cbbTagShow.FormattingEnabled = true;
+            this.cbbTagShow.Items.AddRange(new object[] {
+            "显示所有标签",
+            "显示选中标签"});
+            this.cbbTagShow.Location = new System.Drawing.Point(139, 21);
+            this.cbbTagShow.Margin = new System.Windows.Forms.Padding(4);
+            this.cbbTagShow.Name = "cbbTagShow";
+            this.cbbTagShow.Size = new System.Drawing.Size(160, 25);
+            this.cbbTagShow.TabIndex = 5;
             // 
             // COUNT
             // 
@@ -307,7 +338,7 @@
             this.COUNT.Location = new System.Drawing.Point(659, 26);
             this.COUNT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.COUNT.Name = "COUNT";
-            this.COUNT.Size = new System.Drawing.Size(15, 15);
+            this.COUNT.Size = new System.Drawing.Size(17, 17);
             this.COUNT.TabIndex = 6;
             this.COUNT.Text = "0";
             // 
@@ -317,48 +348,17 @@
             this.label6.Location = new System.Drawing.Point(332, 25);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 15);
+            this.label6.Size = new System.Drawing.Size(76, 17);
             this.label6.TabIndex = 4;
             this.label6.Text = "过滤标签";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(430, 20);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(125, 25);
+            this.textBox1.Size = new System.Drawing.Size(125, 27);
             this.textBox1.TabIndex = 3;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(572, 26);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 15);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "标签数量";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(53, 26);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 15);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "标签显示";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 69);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(747, 498);
-            this.dataGridView1.TabIndex = 1;
             // 
             // timer1
             // 
@@ -372,18 +372,20 @@
             this.ClientSize = new System.Drawing.Size(982, 571);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "读卡器";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -407,7 +409,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbbTagShow;
         private System.Windows.Forms.Label COUNT;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
