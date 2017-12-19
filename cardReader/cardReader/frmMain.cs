@@ -13,6 +13,8 @@ namespace cardReader
 {
     public partial class frmMain : Form
     {
+        private DataTable dt = new DataTable();
+
         public frmMain()
         {
             InitializeComponent();
@@ -20,6 +22,7 @@ namespace cardReader
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            // 初始化选择框
             this.cbbComList.SelectedIndex = 0;
             this.cbbBaudRate.SelectedIndex = 5;
             this.cbbDataBits.SelectedIndex = 0;
@@ -28,6 +31,24 @@ namespace cardReader
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbParity.SelectedIndex = 0;
             this.cbbTagShow.SelectedIndex = 0;
+            // 初始化dataGridView
+            DataColumn col1 = new DataColumn("设备ID", typeof(string));
+            DataColumn col2 = new DataColumn("激活ID", typeof(string));
+            DataColumn col3 = new DataColumn("标签ID", typeof(string));
+            DataColumn col4 = new DataColumn("标签Rssi", typeof(string));
+            DataColumn col5 = new DataColumn("激活Rssi", typeof(string));
+            DataColumn col6 = new DataColumn("状态", typeof(string));
+            DataColumn col7 = new DataColumn("时间", typeof(string));
+            DataColumn col8 = new DataColumn("次数", typeof(string));
+            dt.Columns.Add(col1);
+            dt.Columns.Add(col2);
+            dt.Columns.Add(col3);
+            dt.Columns.Add(col4);
+            dt.Columns.Add(col5);
+            dt.Columns.Add(col6);
+            dt.Columns.Add(col7);
+            dt.Columns.Add(col8);
+            this.dataGridView1.DataSource = dt.DefaultView;
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -71,6 +92,34 @@ namespace cardReader
                 MessageBox.Show("关闭串口成功!");
                 this.pictureBox1.BackgroundImage = Properties.Resources.red;
                 this.btnOpen.Text = "打开串口";
+            }
+        }
+
+        /// <summary>
+        /// 接收数据事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            int nReadBytes = this.serialPort1.BytesToRead;
+            if (nReadBytes == 0)
+                return;
+
+            byte[] bRead = new byte[nReadBytes];
+            this.serialPort1.Read(bRead, 0, nReadBytes);
+            // 已经读取完成
+            Console.WriteLine(bRead.Length);
+            for (int i = 0;  i < bRead.Length;  i++)
+            {
+                Console.Write(i);
+            }
+            if (bRead.Length > 9)
+            {
+                if (bRead[0] == 0x55 && bRead[1] == 0xAA)
+                {
+
+                }
             }
         }
     }
