@@ -13,7 +13,10 @@ namespace cardReader
 {
     public partial class frmMain : Form
     {
+        // dataGridView mMsg
         private DataTable dt = new DataTable();
+        private List<TagMsg> mMsg = new List<TagMsg>();
+        private Dictionary<int, Temp> mDMsg = new Dictionary<int, Temp>();
 
         public frmMain()
         {
@@ -79,6 +82,10 @@ namespace cardReader
                         MessageBox.Show("打开串口成功!");
                         this.pictureBox1.BackgroundImage = Properties.Resources.green;
                         this.btnOpen.Text = "关闭串口";
+                        // 设置定时器为true
+                        dt.Rows.Clear();
+                        this.dataGridView1.DataSource = dt.DefaultView;
+                        this.timer1.Enabled = true;
                     }
                 }
                 catch (Exception ex)
@@ -92,6 +99,12 @@ namespace cardReader
                 MessageBox.Show("关闭串口成功!");
                 this.pictureBox1.BackgroundImage = Properties.Resources.red;
                 this.btnOpen.Text = "打开串口";
+                // 设置定时器为false
+                mDMsg.Clear();
+                dt.Rows.Clear();
+                this.COUNT.Text = "0";
+                this.dataGridView1.DataSource = dt.DefaultView;
+                this.timer1.Enabled = false;
             }
         }
 
@@ -109,7 +122,6 @@ namespace cardReader
             byte[] bRead = new byte[nReadBytes];
             this.serialPort1.Read(bRead, 0, nReadBytes);
             // 已经读取完成
-            List<TagMsg> mMsg = new List<TagMsg>();
             List<Byte> mRecv = new List<Byte>();
             mRecv.AddRange(bRead);
             Console.WriteLine(bRead.Length);
@@ -196,5 +208,30 @@ namespace cardReader
                 }
             }
         }
+
+
+        // 向串口写数据
+        //private void Write(byte[] data)
+        //{
+        //    if (this.serialPort1.IsOpen)
+        //    {
+        //        this.serialPort1.Write(data, 0, data.Length);
+        //    }
+
+
+        //}
+
+        //private void button2_Click(object sender, EventArgs e)
+        //{
+        //    byte[] data1 = new byte[12];
+        //    data1[0] = 0x01;
+        //    data1[1] = 0x02;
+        //    data1[3] = 0x03;
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        data1[i] = (byte)i;
+        //    }
+        //    Write(data1);
+        //}
     }
 }

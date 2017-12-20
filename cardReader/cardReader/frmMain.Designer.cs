@@ -74,7 +74,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 69);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 69);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.Size = new System.Drawing.Size(1126, 535);
@@ -89,9 +89,9 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Font = new System.Drawing.Font("SimSun", 10F);
-            this.groupBox2.Location = new System.Drawing.Point(0, 7);
+            this.groupBox2.Location = new System.Drawing.Point(0, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(744, 61);
+            this.groupBox2.Size = new System.Drawing.Size(1126, 61);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "标签设置";
@@ -99,7 +99,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(53, 26);
+            this.label8.Location = new System.Drawing.Point(145, 26);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 17);
@@ -109,7 +109,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(572, 26);
+            this.label7.Location = new System.Drawing.Point(761, 26);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(76, 17);
@@ -122,7 +122,7 @@
             this.cbbTagShow.Items.AddRange(new object[] {
             "显示所有标签",
             "显示选中标签"});
-            this.cbbTagShow.Location = new System.Drawing.Point(139, 21);
+            this.cbbTagShow.Location = new System.Drawing.Point(249, 22);
             this.cbbTagShow.Margin = new System.Windows.Forms.Padding(4);
             this.cbbTagShow.Name = "cbbTagShow";
             this.cbbTagShow.Size = new System.Drawing.Size(160, 25);
@@ -131,7 +131,7 @@
             // COUNT
             // 
             this.COUNT.AutoSize = true;
-            this.COUNT.Location = new System.Drawing.Point(659, 26);
+            this.COUNT.Location = new System.Drawing.Point(866, 26);
             this.COUNT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.COUNT.Name = "COUNT";
             this.COUNT.Size = new System.Drawing.Size(17, 17);
@@ -141,7 +141,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(332, 25);
+            this.label6.Location = new System.Drawing.Point(457, 25);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 17);
@@ -150,7 +150,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(430, 20);
+            this.textBox1.Location = new System.Drawing.Point(560, 20);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(125, 27);
