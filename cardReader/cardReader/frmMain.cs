@@ -88,7 +88,7 @@ namespace cardReader
                     this.serialPort1.Open();
                     if (this.serialPort1.IsOpen)
                     {
-                        MessageBox.Show("打开串口成功!");
+                        MessageBox.Show("打开串口成功!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.pictureBox1.BackgroundImage = Properties.Resources.green;
                         this.btnOpen.Text = "关闭串口";
                         // 设置定时器为true
@@ -105,7 +105,7 @@ namespace cardReader
             else
             {
                 this.serialPort1.Close();
-                MessageBox.Show("关闭串口成功!");
+                MessageBox.Show("关闭串口成功!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.pictureBox1.BackgroundImage = Properties.Resources.red;
                 this.btnOpen.Text = "打开串口";
                 // 设置定时器为false
