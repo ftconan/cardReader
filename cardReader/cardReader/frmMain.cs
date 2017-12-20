@@ -188,6 +188,7 @@ namespace cardReader
                     {
                         // 数据长度不一样就跳出
                         break;
+                        continue;
                     }
                 }
                 else
