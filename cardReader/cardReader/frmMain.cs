@@ -35,8 +35,8 @@ namespace cardReader
             DataColumn col1 = new DataColumn("设备ID", typeof(string));
             DataColumn col2 = new DataColumn("激活ID", typeof(string));
             DataColumn col3 = new DataColumn("标签ID", typeof(string));
-            DataColumn col4 = new DataColumn("标签Rssi", typeof(string));
-            DataColumn col5 = new DataColumn("激活Rssi", typeof(string));
+            DataColumn col4 = new DataColumn("激活Rssi", typeof(string));
+            DataColumn col5 = new DataColumn("标签Rssi", typeof(string));
             DataColumn col6 = new DataColumn("状态", typeof(string));
             DataColumn col7 = new DataColumn("时间", typeof(string));
             DataColumn col8 = new DataColumn("次数", typeof(string));
@@ -83,7 +83,7 @@ namespace cardReader
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("打开串口失败,请检查串口名称!");
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -109,16 +109,90 @@ namespace cardReader
             byte[] bRead = new byte[nReadBytes];
             this.serialPort1.Read(bRead, 0, nReadBytes);
             // 已经读取完成
+            List<TagMsg> mMsg = new List<TagMsg>();
+            List<Byte> mRecv = new List<Byte>();
+            mRecv.AddRange(bRead);
             Console.WriteLine(bRead.Length);
-            for (int i = 0;  i < bRead.Length;  i++)
+            Console.WriteLine(mRecv);
+            while(mRecv.Count > 9)
             {
-                Console.Write(i);
-            }
-            if (bRead.Length > 9)
-            {
-                if (bRead[0] == 0x55 && bRead[1] == 0xAA)
+                if (mRecv[0] == 0x55 && mRecv[1] == 0xAA)
                 {
+                    int dataLength = (mRecv[3] << 8 | mRecv[2]) + 2;
+                    if (mRecv.Count >= dataLength)
+                    {
+                        byte[] data = new byte[dataLength];
+                        mRecv.CopyTo(0, data, 0, dataLength);
+                        int nDeviceId = data[5] << 8 | data[4];
+                        switch (data[6])
+                        {
+                            case 0x01:
+                                // 接收数据
+                                #region "0x01"
+                                DateTime now = DateTime.Now;
+                                int nCount = dataLength / 9 - 1;
+                                for (int i = 0; i < nCount; i++)
+                                {
+                                    int nTagId = data[13 + i * 9] << 16 | data[12 + i * 9] << 8 | data[11 + i * 9];
+                                    int nDeviceRssi = data[10 + i * 9] << 8 | data[9 + i * 9];
+                                    int nActiveId = data[15 + i * 9] << 8 | data[16 + i * 9];
+                                    int nTagRssi = data[17 + i * 9];
+                                    // set value 
+                                    TagMsg tagMsg = new TagMsg();
+                                    tagMsg.ReciveDt = now;
+                                    tagMsg.State = data[14 + i * 9];
+                                    tagMsg.DeviceId = nDeviceId;
+                                    tagMsg.DeviceRssi = nDeviceRssi;
+                                    tagMsg.ActiveId = nActiveId;
+                                    tagMsg.TagId = nTagId;
+                                    tagMsg.TagRssi = nTagRssi;
+                                    // 最大缓存数据条数1000条
+                                    if (mMsg.Count >= 1000)
+                                    {
+                                        mMsg.RemoveAt(0);
+                                    }
+                                    // 过滤激活id为0和65535
+                                    if (tagMsg.ActiveId != 0 | tagMsg.ActiveId != 65535)
+                                    {
+                                        mMsg.Add(tagMsg);
+                                    }
 
+                                }
+                                #endregion
+                                break;
+                            case 0x02:
+                                // 心跳
+                                break;
+                            case 0x03:
+                                // 配置集中器参数指令
+                                break;
+                            case 0x04:
+                                // 设置控制器参数指令
+                                break;
+                            case 0x05:
+                                // 设置主机出厂指令
+                                break;
+                            case 0x0B:
+                                // 配置基站网关参数指令
+                                break;
+                            case 0x0C:
+                                // 读取基站网关参数指令
+                                break;
+                            default:
+                                break;
+                        }
+                        mRecv.RemoveRange(0, dataLength);
+                        continue;
+                    }
+                    else
+                    {
+                        // 数据长度不一样就跳出
+                        break;
+                    }
+                }
+                else
+                {
+                    mRecv.RemoveAt(0);
                 }
             }
         }
