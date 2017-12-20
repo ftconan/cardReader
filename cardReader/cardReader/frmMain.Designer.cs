@@ -34,7 +34,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbbTagShow = new System.Windows.Forms.ComboBox();
             this.COUNT = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -54,6 +53,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.TagShow = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -82,9 +82,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.TagShow);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.cbbTagShow);
             this.groupBox2.Controls.Add(this.COUNT);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.textBox1);
@@ -115,18 +115,6 @@
             this.label7.Size = new System.Drawing.Size(76, 17);
             this.label7.TabIndex = 7;
             this.label7.Text = "标签数量";
-            // 
-            // cbbTagShow
-            // 
-            this.cbbTagShow.FormattingEnabled = true;
-            this.cbbTagShow.Items.AddRange(new object[] {
-            "显示所有标签",
-            "显示选中标签"});
-            this.cbbTagShow.Location = new System.Drawing.Point(249, 22);
-            this.cbbTagShow.Margin = new System.Windows.Forms.Padding(4);
-            this.cbbTagShow.Name = "cbbTagShow";
-            this.cbbTagShow.Size = new System.Drawing.Size(160, 25);
-            this.cbbTagShow.TabIndex = 5;
             // 
             // COUNT
             // 
@@ -163,6 +151,7 @@
             // timer1
             // 
             this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // panel1
             // 
@@ -368,6 +357,18 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "数据位";
             // 
+            // TagShow
+            // 
+            this.TagShow.AutoSize = true;
+            this.TagShow.Font = new System.Drawing.Font("SimSun", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TagShow.ForeColor = System.Drawing.Color.Blue;
+            this.TagShow.Location = new System.Drawing.Point(257, 26);
+            this.TagShow.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TagShow.Name = "TagShow";
+            this.TagShow.Size = new System.Drawing.Size(123, 19);
+            this.TagShow.TabIndex = 9;
+            this.TagShow.Text = "显示所有标签";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -398,7 +399,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cbbTagShow;
         private System.Windows.Forms.Label COUNT;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
@@ -420,6 +420,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label TagShow;
     }
 }
 

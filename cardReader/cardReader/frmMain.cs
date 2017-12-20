@@ -23,6 +23,11 @@ namespace cardReader
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 主窗体加载，初始化组件信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmMain_Load(object sender, EventArgs e)
         {
             // 初始化选择框
@@ -33,7 +38,6 @@ namespace cardReader
             this.cbbStopBits.SelectedIndex = 0;
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbParity.SelectedIndex = 0;
-            this.cbbTagShow.SelectedIndex = 0;
             // 初始化dataGridView
             DataColumn col1 = new DataColumn("设备ID", typeof(string));
             DataColumn col2 = new DataColumn("激活ID", typeof(string));
@@ -54,6 +58,11 @@ namespace cardReader
             this.dataGridView1.DataSource = dt.DefaultView;
         }
 
+        /// <summary>
+        /// 打开串口按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOpen_Click(object sender, EventArgs e)
         {
             // 判断串口是否打开
@@ -209,6 +218,97 @@ namespace cardReader
             }
         }
 
+        /// <summary>
+        /// 定时器，用来刷新dataGridView数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            int nCount = mMsg.Count();
+            while (nCount > 0)
+            {
+                if (mMsg.Count == 0)
+                    break;
+                TagMsg tmsg = mMsg[0];
+                mMsg.RemoveAt(0);
+                TagMsg msg = tmsg;
+                // mMsg添加数据到mDMsg
+                if (mDMsg.ContainsKey(msg.TagId))
+                {
+                    mDMsg[msg.TagId].Tagmsg = msg;
+                    mDMsg[msg.TagId].Count += 1;
+                }
+                else
+                {
+                    mDMsg[msg.TagId] = new Temp(msg);
+                }
+                nCount--;
+            }
+            this.Invoke((EventHandler)(delegate
+            {
+                dt.Rows.Clear();
+                int COUNT = 0;
+                
+                // 遍历mDMsg,把数据添加到dataGridView
+                foreach (var item in mDMsg)
+                {
+                    Temp temp = item.Value;
+                    TagMsg msg = temp.Tagmsg;
+                    // 过滤标签
+                    if (!String.IsNullOrEmpty(this.textBox1.Text))
+                    {
+                        try
+                        {
+                            this.TagShow.Text = "显示单个标签";
+                            int ntDeviceId = Convert.ToInt32(this.textBox1.Text);
+
+                            if (ntDeviceId == item.Key)
+                            {
+                                DataRow row = dt.NewRow();
+                                row[0] = msg.DeviceId;
+                                row[1] = msg.ActiveId;
+                                row[2] = msg.TagId;
+                                row[3] = msg.TagRssi;
+                                row[4] = msg.DeviceRssi;
+                                row[5] = msg.State.ToString("X2");
+                                row[6] = msg.ReciveDt.ToString("HH:mm:ss");
+                                row[7] = temp.Count.ToString();
+                                dt.Rows.Add(row);
+
+                                COUNT++;
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        this.TagShow.Text = "显示所有标签";
+                        DataRow row = dt.NewRow();
+                        row[0] = msg.DeviceId;
+                        row[1] = msg.ActiveId;
+                        row[2] = msg.TagId;
+                        row[3] = msg.TagRssi;
+                        row[4] = msg.DeviceRssi;
+                        row[5] = msg.State.ToString("X2");
+                        row[6] = msg.ReciveDt.ToString("HH:mm:ss");
+                        row[7] = temp.Count.ToString();
+                        dt.Rows.Add(row);
+
+                        COUNT++;
+                    }
+
+                    continue;
+                }
+
+                this.COUNT.Text = COUNT.ToString();
+                this.dataGridView1.DataSource = dt.DefaultView;
+            }));
+        }
 
         // 向串口写数据
         //private void Write(byte[] data)
