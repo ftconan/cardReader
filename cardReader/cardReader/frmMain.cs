@@ -21,6 +21,7 @@ namespace cardReader
         public frmMain()
         {
             InitializeComponent();
+            
         }
 
         /// <summary>
@@ -32,12 +33,19 @@ namespace cardReader
         {
             // 初始化选择框
             this.cbbComList.SelectedIndex = 0;
-            this.cbbBaudRate.SelectedIndex = 5;
+            this.cbbBaudRate.SelectedIndex = 7;
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbStopBits.SelectedIndex = 0;
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbParity.SelectedIndex = 0;
+            // 打开串口获得串口名称
+            if(SerialPort.GetPortNames().Length > 0)
+            {
+                this.cbbComList.Items.AddRange(SerialPort.GetPortNames());
+                this.cbbComList.SelectedIndex = 0;
+            }
+
             // 初始化dataGridView
             DataColumn col1 = new DataColumn("设备ID", typeof(string));
             DataColumn col2 = new DataColumn("激活ID", typeof(string));
@@ -133,9 +141,44 @@ namespace cardReader
             // 已经读取完成
             List<Byte> mRecv = new List<Byte>();
             mRecv.AddRange(bRead);
-            Console.WriteLine(bRead.Length);
-            Console.WriteLine(mRecv);
-            while(mRecv.Count > 9)
+            //Console.WriteLine(bRead.Length);
+            for(int i = 0; i<bRead.Length; i++)
+            {
+                Console.Write(mRecv[i].ToString()+" ");
+            }
+            Console.Write("\n");
+            #region
+            while (mRecv.Count >= 19)
+            {
+                if (mRecv[0] == 0x02 && mRecv[1] == 0x03 && mRecv[2] == 0x04 && mRecv[3] == 0x05 )
+                {
+                    int dataLength = mRecv[4] << 8 | mRecv[5];
+                    byte[] data = new byte[dataLength];
+                    mRecv.CopyTo(0, data, 0, dataLength);
+                    byte cal = 0;
+                    for (int i =0;i < data.Length - 1; i ++)
+                    {
+                        cal += data[i];
+                    }
+                    if (data[data.Length-1] == (byte) cal)
+                    {
+                        // 根据命令执行相关操作
+                        int id = data[11] << 16 | data[12] << 8 | data[13];
+                        Console.WriteLine(id.ToString());
+                    }
+
+
+                    mRecv.RemoveRange(0, 19);
+                }
+                else
+                {
+                    mRecv.RemoveAt(0);
+                }
+            }
+            #endregion
+
+            #region
+            while (mRecv.Count > 9)
             {
                 if (mRecv[0] == 0x55 && mRecv[1] == 0xAA)
                 {
@@ -149,7 +192,7 @@ namespace cardReader
                         {
                             case 0x01:
                                 // 接收数据
-                                #region "0x01"
+                                #region " 0x01 "
                                 DateTime now = DateTime.Now;
                                 int nCount = dataLength / 9 - 1;
                                 for (int i = 0; i < nCount; i++)
@@ -167,17 +210,15 @@ namespace cardReader
                                     tagMsg.ActiveId = nActiveId;
                                     tagMsg.TagId = nTagId;
                                     tagMsg.TagRssi = nTagRssi;
-                                    // 最大缓存数据条数1000条
-                                    if (mMsg.Count >= 1000)
+                                    if (mMsg.Count >= 200)
                                     {
                                         mMsg.RemoveAt(0);
                                     }
-                                    // 过滤激活id为0和65535
-                                    if (tagMsg.ActiveId != 0 | tagMsg.ActiveId != 65535)
+                                    // 过滤为0的数据
+                                    if (tagMsg.ActiveId != 0)
                                     {
                                         mMsg.Add(tagMsg);
                                     }
-
                                 }
                                 #endregion
                                 break;
@@ -215,7 +256,8 @@ namespace cardReader
                 {
                     mRecv.RemoveAt(0);
                 }
-            }
+            } // endwhile
+            #endregion
         }
 
         /// <summary>

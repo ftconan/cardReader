@@ -28,17 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.TagShow = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.COUNT = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.serialPort1 = new System.IO.Ports.SerialPort();
+            this.timer1 = new System.Windows.Forms.Timer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOpen = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -53,7 +54,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.TagShow = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -95,6 +95,18 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "标签设置";
+            // 
+            // TagShow
+            // 
+            this.TagShow.AutoSize = true;
+            this.TagShow.Font = new System.Drawing.Font("SimSun", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TagShow.ForeColor = System.Drawing.Color.Blue;
+            this.TagShow.Location = new System.Drawing.Point(257, 26);
+            this.TagShow.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TagShow.Name = "TagShow";
+            this.TagShow.Size = new System.Drawing.Size(123, 19);
+            this.TagShow.TabIndex = 9;
+            this.TagShow.Text = "显示所有标签";
             // 
             // label8
             // 
@@ -357,18 +369,6 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "数据位";
             // 
-            // TagShow
-            // 
-            this.TagShow.AutoSize = true;
-            this.TagShow.Font = new System.Drawing.Font("SimSun", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TagShow.ForeColor = System.Drawing.Color.Blue;
-            this.TagShow.Location = new System.Drawing.Point(257, 26);
-            this.TagShow.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.TagShow.Name = "TagShow";
-            this.TagShow.Size = new System.Drawing.Size(123, 19);
-            this.TagShow.TabIndex = 9;
-            this.TagShow.Text = "显示所有标签";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -377,6 +377,7 @@
             this.ClientSize = new System.Drawing.Size(1362, 603);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
