@@ -32,7 +32,7 @@ namespace cardReader
         private void frmMain_Load(object sender, EventArgs e)
         {
             // 初始化选择框
-            this.cbbComList.SelectedIndex = 0;
+            //this.cbbComList.SelectedIndex = 0;
             this.cbbBaudRate.SelectedIndex = 7;
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbDataBits.SelectedIndex = 0;
@@ -40,10 +40,15 @@ namespace cardReader
             this.cbbDataBits.SelectedIndex = 0;
             this.cbbParity.SelectedIndex = 0;
             // 打开串口获得串口名称
-            if(SerialPort.GetPortNames().Length > 0)
+            if (SerialPort.GetPortNames().Length > 0)
             {
                 this.cbbComList.Items.AddRange(SerialPort.GetPortNames());
                 this.cbbComList.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("请先接入读卡器设备!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Exit();
             }
 
             // 初始化dataGridView
@@ -141,42 +146,6 @@ namespace cardReader
             // 已经读取完成
             List<Byte> mRecv = new List<Byte>();
             mRecv.AddRange(bRead);
-            //Console.WriteLine(bRead.Length);
-            for(int i = 0; i<bRead.Length; i++)
-            {
-                Console.Write(mRecv[i].ToString()+" ");
-            }
-            Console.Write("\n");
-            #region
-            while (mRecv.Count >= 19)
-            {
-                if (mRecv[0] == 0x02 && mRecv[1] == 0x03 && mRecv[2] == 0x04 && mRecv[3] == 0x05 )
-                {
-                    int dataLength = mRecv[4] << 8 | mRecv[5];
-                    byte[] data = new byte[dataLength];
-                    mRecv.CopyTo(0, data, 0, dataLength);
-                    byte cal = 0;
-                    for (int i =0;i < data.Length - 1; i ++)
-                    {
-                        cal += data[i];
-                    }
-                    if (data[data.Length-1] == (byte) cal)
-                    {
-                        // 根据命令执行相关操作
-                        int id = data[11] << 16 | data[12] << 8 | data[13];
-                        Console.WriteLine(id.ToString());
-                    }
-
-
-                    mRecv.RemoveRange(0, 19);
-                }
-                else
-                {
-                    mRecv.RemoveAt(0);
-                }
-            }
-            #endregion
-
             #region
             while (mRecv.Count > 9)
             {
@@ -317,7 +286,6 @@ namespace cardReader
                                 row[6] = msg.ReciveDt.ToString("HH:mm:ss");
                                 row[7] = temp.Count.ToString();
                                 dt.Rows.Add(row);
-
                                 COUNT++;
                             }
                         }
@@ -340,16 +308,30 @@ namespace cardReader
                         row[6] = msg.ReciveDt.ToString("HH:mm:ss");
                         row[7] = temp.Count.ToString();
                         dt.Rows.Add(row);
-
                         COUNT++;
                     }
-
                     continue;
                 }
-
                 this.COUNT.Text = COUNT.ToString();
                 this.dataGridView1.DataSource = dt.DefaultView;
             }));
+        }
+
+        // 清空
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.DataSource != null)
+            {
+                mDMsg.Clear();
+                dt.Rows.Clear();
+                this.COUNT.Text = "0";
+                this.dataGridView1.DataSource = dt.DefaultView;
+            }
+
+            else
+            {
+                dt.Rows.Clear();
+            }
         }
 
         // 向串口写数据
